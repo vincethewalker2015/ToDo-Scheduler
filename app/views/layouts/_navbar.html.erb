@@ -9,14 +9,19 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav navbar-left">
           <li><%= link_to "Home", root_path, class:"btn btn-default" %></li>
+          <li><%= link_to current_user.email if user_signed_in? %></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
           <li><%= link_to "Sign Up", '#', class:"btn btn-default" %></li>
           <li><%= link_to "Meetings", '#', class:"btn btn-default" %></li>
           <li><%= link_to "Users", '#', class:"btn btn-default" %></li>
           <li><%= link_to "Create a Todo", '#', class:"btn btn-default" %></li>
-          <li><%= link_to "Log In", '#', class:"btn btn-default" %></li>
-          <li><%= link_to "Log Out", '#', class:"btn btn-default" %></li>
+          <% if user_signed_in? %>
+            <li><%= link_to "Log Out", destroy_user_session_path , class:"btn btn-default", method: :delete%> </li>
+          <% end %>
+          <% unless user_signed_in? %>
+            <li><%= link_to "Log In", new_user_session_path, class:"btn btn-default", method: :get %> </li>
+          <% end %>
         </ul>
       </div>
     </nav>
